@@ -21,7 +21,7 @@ public class Rectangle {
 		this.upperLeft=upperLeft;
 		this.width=width;
 		this.height=height;
-		this.selected=selected;+
+		this.selected=selected;
 	}
 	
 	

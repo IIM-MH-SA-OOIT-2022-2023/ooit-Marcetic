@@ -1,9 +1,11 @@
 package geometry;
 
+import zadaci.Computer;
+
 public class Test {
 
 	public static void main(String[] args) {
-		
+		/*
 		Point p1=new Point();
 		p1.setX(5);
 		System.out.println("Koordinata x tacke p1 je:" +p1.getX());
@@ -19,7 +21,7 @@ public class Test {
 		 System.out.println("Udaljenost tacaka je:" + dist);
 		 
 		 Line l1=new Line();
-		 l1.setStartPoint(p1);
+		 l1.setEndPoint(p1);
 		 l1.setEndPoint(p2);
 		 int odtacke=p2.getX();
 		 int x=l1.getEndPoint().getX();
@@ -47,6 +49,13 @@ public class Test {
 		 Line l3=new Line(p,p,true);
 		 Line l4=new Line(new Point(6,7), new Point (5,6));
 		 
+		
+		Computer c1=new Computer(); //c1 je promenljiva/referenca, konstruktor je zaduzen za instaciranje objekata
+		c1.setRam(15);
+		*/
+		
+		Automobil a1=new Automobil(true,3);
+		a1.promeniBrzinu()
 	}
 
 }
