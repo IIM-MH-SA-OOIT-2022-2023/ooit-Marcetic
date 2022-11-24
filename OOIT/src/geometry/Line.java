@@ -7,9 +7,21 @@ public class Line {
 	public Point getStartPoint() {
 		return startPoint;
 	}
-	public void setStartPoint(Point startPoint) {
+	public Line () {
+		
+	}
+	public Line (Point startPoint, Point endPoint) {
+		this.startPoint=startPoint;
+		this.endPoint=endPoint;
+	}
+	
+	public Line (Point startPoint, Point endPoint, boolean selected) {
+		this.startPoint=startPoint;
+		this.endPoint=endPoint;
+		this.selected=selected;
 		this.startPoint = startPoint;
 	}
+	
 	public Point getEndPoint() {
 		return endPoint;
 	}

@@ -24,6 +24,29 @@ public class Test {
 		 int odtacke=p2.getX();
 		 int x=l1.getEndPoint().getX();
 		 System.out.println("Obe vrednosti " + odtacke + " " + x);
+		 
+		 
+		 Point p=new Point();
+		 p.setX(3);
+		 p.setY(5);
+		 
+		 Circle c=new Circle();
+		 c.setR(7);
+		 c.setCenter(p);
+		 
+		 System.out.println("Centar kruga je tacka sa koordinatama: ");
+		 System.out.println("X je:" + c.getCenter().getX());
+		 System.out.println("Y je:" + c.getCenter().getY());
+		 System.out.println("Poluprecnik kruga je:" + c.getR());
+		 
+		 double circleArea=c.area();
+		 System.out.println(circleArea);
+		 
+		 Line l=new Line();
+		 Line l2=new Line(p,p1);
+		 Line l3=new Line(p,p,true);
+		 Line l4=new Line(new Point(6,7), new Point (5,6));
+		 
 	}
 
 }
