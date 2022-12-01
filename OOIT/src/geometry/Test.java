@@ -52,10 +52,27 @@ public class Test {
 		
 		Computer c1=new Computer(); //c1 je promenljiva/referenca, konstruktor je zaduzen za instaciranje objekata
 		c1.setRam(15);
-		*/
+		
 		
 		Automobil a1=new Automobil(true,3);
 		a1.promeniBrzinu()
+		
+		*/
+		
+		Point p=new Point(4,5);
+		Point p1=new Point (4,6);
+		System.out.println(p.toString());
+		
+		Line l=new Line(new Point(5,7), new Point(8,9));
+		System.out.println(l.toString());
+		
+		Circle c=new Circle(p,5);
+		System.out.println(c.toString());
+		
+		Rectangle r=new Rectangle(p, 5, 6);
+		System.out.println(r.toString());
+		
+		System.out.println(p.equals(p1));
 	}
 
 }

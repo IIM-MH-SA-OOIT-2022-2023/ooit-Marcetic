@@ -22,6 +22,11 @@ public class Line {
 		this.startPoint = startPoint;
 	}
 	
+	
+	public String toString() {
+		return "";
+	}
+	
 	public Point getEndPoint() {
 		return endPoint;
 	}

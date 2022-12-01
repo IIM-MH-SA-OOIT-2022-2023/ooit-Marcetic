@@ -58,5 +58,9 @@ public class Rectangle {
 		this.selected = selected;
 	}
 	
+	@Override
+	public String toString() {
+	return "Upper left point: "	+ upperLeft + ", width: " + width + ", height: " + height;
+	}
 	
 }

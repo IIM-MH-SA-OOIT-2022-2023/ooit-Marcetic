@@ -20,6 +20,10 @@ public class Circle {
 		this.r=r;
 		this.selected=selected;
 	}
+	@Override
+	public String toString() {
+		return "Center: " + center + ", radius: " + r;
+	}
 	
 	public double circumference () {
 		return 2*r*Math.PI;
