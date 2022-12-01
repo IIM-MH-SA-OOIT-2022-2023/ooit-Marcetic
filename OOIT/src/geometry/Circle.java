@@ -24,6 +24,16 @@ public class Circle {
 	public String toString() {
 		return "Center: " + center + ", radius: " + r;
 	}
+	@Override
+	public boolean equals(Object obj) {
+		if(obj instanceof Circle) {
+			Circle temp=(Circle) obj;
+			if(temp.getCenter().equals(getCenter())  && temp.getR()==r){
+				return true;
+			}
+		}
+		return false;
+	}
 	
 	public double circumference () {
 		return 2*r*Math.PI;

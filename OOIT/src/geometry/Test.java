@@ -59,20 +59,26 @@ public class Test {
 		
 		*/
 		
-		Point p=new Point(4,5);
-		Point p1=new Point (4,6);
-		System.out.println(p.toString());
-		
+		Point p1=new Point(5,5);
+		Point p2=new Point (5,5);
+		System.out.println(p1.toString());
+		Line l1=new Line(p1,p2);
+		Rectangle r1= new Rectangle (p2,50,50,false);
+		Circle c1=new Circle(p1,50,true);
 		Line l=new Line(new Point(5,7), new Point(8,9));
 		System.out.println(l.toString());
 		
-		Circle c=new Circle(p,5);
-		System.out.println(c.toString());
 		
-		Rectangle r=new Rectangle(p, 5, 6);
+		Rectangle r=new Rectangle(p2, 5, 6,false);
 		System.out.println(r.toString());
 		
-		System.out.println(p.equals(p1));
+		System.out.println(p1==p2);
+		System.out.println(15==15);
+		System.out.println(p1.equals(p2));
+		System.out.println(p1.equals(c1));
+		System.out.println(l1.equals(p1));
+		
+		
 	}
 
 }

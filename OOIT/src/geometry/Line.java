@@ -22,9 +22,20 @@ public class Line {
 		this.startPoint = startPoint;
 	}
 	
-	
+	@Override
 	public String toString() {
 		return "";
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(obj instanceof Line) {
+			Line temp=(Line) obj;
+			if(startPoint.equals(temp.getStartPoint()) && endPoint.equals(temp.getEndPoint())){
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	public Point getEndPoint() {
