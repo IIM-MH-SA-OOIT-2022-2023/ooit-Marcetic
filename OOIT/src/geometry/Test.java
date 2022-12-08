@@ -79,6 +79,18 @@ public class Test {
 		System.out.println(l1.equals(p1));
 		
 		
+		Circle c=new Circle(new Point(3,5),8);
+		System.out.println(c.area());
+		
+		Donut d=new Donut(new Point(3,5),8,3);
+		System.out.println(d.area());
+		
+		
+		Point p = new Point(3,5);
+		System.out.println(c.equals(d));
+		System.out.println(d.equals(c));
+		
+		
 	}
 
 }
