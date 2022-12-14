@@ -67,7 +67,7 @@ public class Rectangle {
 	public boolean equals(Object obj) {
 		if(obj instanceof Rectangle) {
 			Rectangle temp=(Rectangle) obj;
-			if(temp.upperLeft.equals(temp.getUpperLeft()) && temp.getHeight()==height && temp.getWidth()==width){
+			if(temp.upperLeft.equals(upperLeft) && temp.getHeight()==height && temp.getWidth()==width){
 				return true;
 			}
 		}

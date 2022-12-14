@@ -4,6 +4,7 @@ public class Line {
 	private Point startPoint;
 	private Point endPoint;
 	private boolean selected;
+	
 	public Point getStartPoint() {
 		return startPoint;
 	}
@@ -19,7 +20,6 @@ public class Line {
 		this.startPoint=startPoint;
 		this.endPoint=endPoint;
 		this.selected=selected;
-		this.startPoint = startPoint;
 	}
 	
 	@Override
@@ -31,12 +31,12 @@ public class Line {
 	public boolean equals(Object obj) {
 		if(obj instanceof Line) {
 			Line temp=(Line) obj;
-			if(startPoint.equals(temp.getStartPoint()) && endPoint.equals(temp.getEndPoint())){
-				return true;
+			if(startPoint.equals(temp.getStartPoint()) && endPoint.equals(temp.getEndPoint()))
+					return true;
 			}
-		}
 		return false;
 	}
+	
 	
 	public Point getEndPoint() {
 		return endPoint;

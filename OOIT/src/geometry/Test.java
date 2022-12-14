@@ -58,7 +58,7 @@ public class Test {
 		a1.promeniBrzinu()
 		
 		*/
-		
+		/*
 		Point p1=new Point(5,5);
 		Point p2=new Point (5,5);
 		System.out.println(p1.toString());
@@ -90,6 +90,23 @@ public class Test {
 		System.out.println(c.equals(d));
 		System.out.println(d.equals(c));
 		
+		Circle c1=new Circle(new Point(3,5),2);
+		Circle c2=new Circle(new Point(3,5),2);
+		System.out.println(c1.equals(c2));
+		*/
+	
+		Line l1=new Line(new Point(3,5), new Point(2,3));
+		Line l2=new Line(new Point(3,5), new Point(2,3));
+		System.out.println(l1.equals(l2));
+		
+		Rectangle r1=new Rectangle(new Point (3,5),5,6);
+		Rectangle r2=new Rectangle(new Point(3,5),5,6);
+		System.out.println(r1.equals(r2));
+		
+		
+		
+		
+	
 		
 	}
 
