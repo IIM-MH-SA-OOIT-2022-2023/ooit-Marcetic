@@ -1,9 +1,9 @@
 package geometry;
 
-public class Circle {
+public class Circle extends Shape {
 	private Point center;
 	private double r;
-	private boolean selected;
+
 	
 	
 	public Circle () {
@@ -19,6 +19,14 @@ public class Circle {
 		this.center=center;
 		this.r=r;
 		this.selected=selected;
+	}
+	
+	public boolean contains(int x, int y) {
+		return center.distance(x,y)<=r;
+	}
+	
+	public boolean contains(Point p) {
+		return center.distance(p.getX(), p.getY())<=9;
 	}
 	@Override
 	public String toString() {
@@ -52,12 +60,6 @@ public class Circle {
 	}
 	public void setR(double r) {
 		this.r = r;
-	}
-	public boolean isSelected() {
-		return selected;
-	}
-	public void setSelected(boolean selected) {
-		this.selected = selected;
 	}
 	
 	

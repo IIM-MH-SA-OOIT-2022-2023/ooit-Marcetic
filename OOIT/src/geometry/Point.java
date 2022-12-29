@@ -1,11 +1,10 @@
 package geometry;
 
-public class Point {
+public class Point extends Shape{
 	
 	//	OBELEZJA
 	private int x;
 	private int y;
-	private boolean selected;
 	
 	public Point() {
 		
@@ -43,6 +42,11 @@ public class Point {
 		return d;
 	}
 	
+	public boolean contains(int x, int y) {
+		return this.distance(x, y)<=2;
+		
+	}
+	
 	// GETTERS I SETTERS
 	public int getX() {
 		return x;
@@ -60,13 +64,6 @@ public class Point {
 		this.y=y;
 	}
 	
-	public boolean isSelected() {
-		return selected;
-	}
-	
-	public void setSelected(boolean selected) {
-		this.selected = selected;
-	}
 	
 	
 	
