@@ -2,7 +2,7 @@ package geometry;
 
 public abstract class Shape {
 	protected boolean selected;
-	
+
 	public Shape () {
 		
 	}
@@ -20,6 +20,9 @@ public abstract class Shape {
 	public void setSelected(boolean selected) {
 		this.selected = selected;
 	}
+	
+	public abstract void draw(Graphics g);
+
 	
 	
 }
