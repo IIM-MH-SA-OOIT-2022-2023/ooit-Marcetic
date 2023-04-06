@@ -93,7 +93,7 @@ public class Test {
 		Circle c1=new Circle(new Point(3,5),2);
 		Circle c2=new Circle(new Point(3,5),2);
 		System.out.println(c1.equals(c2));
-		*/
+		
 	
 		Line l1=new Line(new Point(3,5), new Point(2,3));
 		Line l2=new Line(new Point(3,5), new Point(2,3));
@@ -102,7 +102,7 @@ public class Test {
 		Rectangle r1=new Rectangle(new Point (3,5),5,6);
 		Rectangle r2=new Rectangle(new Point(3,5),5,6);
 		System.out.println(r1.equals(r2));
-		
+		*/
 		
 		
 	}

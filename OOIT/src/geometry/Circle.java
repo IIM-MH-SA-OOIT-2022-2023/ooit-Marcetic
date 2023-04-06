@@ -1,8 +1,10 @@
 package geometry;
 
+import java.awt.Graphics;
+
 public class Circle extends Shape {
-	private Point center;
-	private double r;
+	protected Point center;
+	protected int r;
 
 	
 	
@@ -10,12 +12,12 @@ public class Circle extends Shape {
 		
 	}
 	
-	public Circle(Point center, double r) {
+	public Circle(Point center, int r) {
 		this.center=center;
 		this.r=r;
 	}
 	
-	public Circle(Point center, double r, boolean selected) {
+	public Circle(Point center, int r, boolean selected) {
 		this.center=center;
 		this.r=r;
 		this.selected=selected;
@@ -36,11 +38,36 @@ public class Circle extends Shape {
 	public boolean equals(Object obj) {
 		if(obj instanceof Circle) {
 			Circle temp=(Circle) obj;
-			if(temp.getCenter().equals(getCenter())  && temp.getR()==r){
+			if(temp.getCenter().equals(center)  && temp.getR()==r){
 				return true;
 			}
 		}
 		return false;
+	}
+	
+	@Override
+	public void moveOn(int x, int y) {
+		center.moveOn(x, y);
+	}
+
+	@Override
+	public void moveBy(int dx, int dy) {
+		center.moveBy(dx, dy);
+	}	
+	
+	@Override
+	public int compareTo(Object o) {
+		if(o instanceof Circle) {
+			Circle temp = (Circle)o;
+			return ((int)(this.area() - temp.area()));
+		}
+		return 0;
+	}
+	
+	@Override
+	public void draw(Graphics g) {
+		g.drawOval(center.getX()-r, center.getY()-r,
+				r*2, r*2);
 	}
 	
 	public double circumference () {
@@ -58,7 +85,7 @@ public class Circle extends Shape {
 	public double getR() {
 		return r;
 	}
-	public void setR(double r) {
+	public void setR(int r) {
 		this.r = r;
 	}
 	

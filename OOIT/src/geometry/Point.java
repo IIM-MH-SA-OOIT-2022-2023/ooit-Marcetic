@@ -1,6 +1,8 @@
 package geometry;
 
-public class Point extends Shape{
+import java.awt.Graphics;
+
+public class Point extends Shape implements Moveable{
 	
 	//	OBELEZJA
 	private int x;
@@ -24,6 +26,13 @@ public class Point extends Shape{
 	public String toString() {
 		return "(" + x + "," + y + ")";
 	}
+	
+	public double distance(int x, int y) {
+		int dx = this.x - x;
+		int dy = this.y - y;
+		double d = Math.sqrt((dx*dx)+(dy*dy));
+		return d;
+	}
 	@Override 
 	public boolean equals(Object obj) {
 		if (obj instanceof Point) {
@@ -35,11 +44,33 @@ public class Point extends Shape{
 		return false;
 	}
 	
-	public double distance(int x, int y) {
-		int dx=this.x-x;
-		int dy=this.y-y;
-		double d=Math.sqrt(dx*dx + dy*dy);
-		return d;
+	@Override
+	public int compareTo(Object o) {
+		if(o instanceof Point) {
+			Point temp = (Point)o;
+			return ((int)(this.distance(0, 0) - temp.distance(0, 0))); 
+		}
+		return 0;
+	}
+	
+	@Override
+	public void moveOn(int x, int y) {
+		this.x = x;
+		this.y = y;
+	}
+
+	@Override
+	public void moveBy(int dx, int dy) {
+		this.x = this.x + dx;
+		this.y = this.y + dy;
+	}
+	
+	public void draw(Graphics g) {
+		g.drawLine(this.x - 2, this.y, this.x + 2, this.y);
+		g.drawLine(this.x, this.y - 2, this.x, this.y + 2);
+		if(selected) {
+			g.drawRect(this.x - 4, this.y - 4, 8, 8);
+		}
 	}
 	
 	public boolean contains(int x, int y) {
@@ -63,9 +94,6 @@ public class Point extends Shape{
 	public void setY(int y) {
 		this.y=y;
 	}
-	
-	
-	
 	
 	
 	
