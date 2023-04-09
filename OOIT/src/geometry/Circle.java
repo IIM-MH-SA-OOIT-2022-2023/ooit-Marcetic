@@ -82,7 +82,7 @@ public class Circle extends Shape {
 	public void setCenter(Point center) {
 		this.center = center;
 	}
-	public double getR() {
+	public int getR() {
 		return r;
 	}
 	public void setR(int r) {

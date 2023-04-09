@@ -19,15 +19,13 @@ public class Donut extends Circle{
 		this.innerR=innerR;
 	}
 	
-	@Override
-	public boolean contains(int x, int y) {
-		return super.contains(x, y) && super.getCenter().distance(x, y)>=innerR;
-	}
 	
 	@Override
 	public boolean contains(Point p) {
 		return this.contains(p.getX(),p.getY());
 	}
+	
+
 	@Override
 	public double area() {
 		return super.area() - innerR*innerR*Math.PI;
@@ -47,7 +45,7 @@ public class Donut extends Circle{
 	public boolean equals(Object obj) {
 		if(obj instanceof Donut) {
 			Donut temp = (Donut) obj;
-			if(super.equals(new Circle(temp.getCenter(), temp.getR())) && temp.getInnerR() == innerR) {
+			if(super.equals( new Circle(temp.getCenter(), temp.getR())) && temp.getInnerR() == innerR) {
 				return true;
 			}
 		}
