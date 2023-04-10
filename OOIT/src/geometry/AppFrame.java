@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JToggleButton;
 import javax.swing.border.EmptyBorder;
 import java.awt.GridLayout;
 import java.awt.GridBagLayout;
@@ -19,6 +20,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import javax.swing.JButton;
+import javax.swing.JColorChooser;
 public class AppFrame extends JFrame implements ActionListener{
 
 	/**
@@ -27,8 +29,25 @@ public class AppFrame extends JFrame implements ActionListener{
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private ArrayList<Shape> shapes = new ArrayList<Shape>();
-	private Shape selected;
+	private boolean selected;
+	private int counter = 0;
+	private boolean slct;
+	private Point startPoint, endPoint;
+	private Color color;
+	private JToggleButton btnSelect;
+	private JToggleButton btnModify;
+	private JToggleButton btnDelete;
+	private JToggleButton btnPoint;
+	private JToggleButton btnLine;
+	private JToggleButton btnRectangle;
+	private JToggleButton btnColor;
+	private JToggleButton btnDonut;
+	private JToggleButton btnCircle;
+
 	
+	public void setShapes(ArrayList<Shape> shapes) {
+		this.shapes = shapes;
+	}
 	/**
 	 * Launch the application.
 	 */
@@ -44,6 +63,27 @@ public class AppFrame extends JFrame implements ActionListener{
 			}
 		});
 	}
+	
+	private MouseListener ml = new MouseAdapter() {
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			if(btnPoint.isSelected()) {
+				btnPoint(e);	
+			}else if(btnLine.isSelected()) {
+				btnLine(e);	
+			}else if(btnRectangle.isSelected()) {
+				btnRectangle(e);	
+			}else if(btnCircle.isSelected()) {
+				btnCircle(e);
+			}else if(btnDonut.isSelected()) {
+				btnDonut(e);
+			}else if(btnSelect.isSelected()) {
+				btnSelected(e);
+			}
+		}
+
+
+	};
 
 	/**
 	 * Create the frame.
@@ -56,9 +96,9 @@ public class AppFrame extends JFrame implements ActionListener{
 
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
-		gbl_contentPane.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gbl_contentPane.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 		gbl_contentPane.rowHeights = new int[]{0, 0, 0, 0, 0, 0};
-		gbl_contentPane.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_contentPane.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
 		contentPane.setLayout(gbl_contentPane);
 		
@@ -68,7 +108,7 @@ public class AppFrame extends JFrame implements ActionListener{
 		gbc_panel.insets = new Insets(0, 0, 5, 5);
 		gbc_panel.gridwidth = 11;
 		gbc_panel.fill = GridBagConstraints.BOTH;
-		gbc_panel.gridx = 5;
+		gbc_panel.gridx = 6;
 		gbc_panel.gridy = 1;
 		contentPane.add(panel, gbc_panel);
 		
@@ -79,21 +119,42 @@ public class AppFrame extends JFrame implements ActionListener{
 		});
 		GridBagConstraints gbc_btnSelect = new GridBagConstraints();
 		gbc_btnSelect.insets = new Insets(0, 0, 5, 5);
-		gbc_btnSelect.gridx = 5;
+		gbc_btnSelect.gridx = 6;
 		gbc_btnSelect.gridy = 3;
 		contentPane.add(btnSelect, gbc_btnSelect);
 		
 		JButton btnPoint = new JButton("Point");
+		btnPoint.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				for(Shape s : shapes){
+					if(s.contains(e.getX(),e.getY()))
+					{
+						if(s instanceof Point){
+							if(!s.isSelected()) {
+								s.setSelected(true);
+								shapes.add(s);
+								repaint();
+							}else {
+								s.setSelected(false);
+								shapes.remove(s);
+								repaint();
+							}
+			}
+		}
+				}
+			}
+		});
 		GridBagConstraints gbc_btnPoint = new GridBagConstraints();
 		gbc_btnPoint.insets = new Insets(0, 0, 5, 5);
-		gbc_btnPoint.gridx = 7;
+		gbc_btnPoint.gridx = 8;
 		gbc_btnPoint.gridy = 3;
 		contentPane.add(btnPoint, gbc_btnPoint);
 		
 		JButton btnLine = new JButton("Line");
 		GridBagConstraints gbc_btnLine = new GridBagConstraints();
 		gbc_btnLine.insets = new Insets(0, 0, 5, 5);
-		gbc_btnLine.gridx = 8;
+		gbc_btnLine.gridx = 9;
 		gbc_btnLine.gridy = 3;
 		contentPane.add(btnLine, gbc_btnLine);
 		
@@ -101,23 +162,103 @@ public class AppFrame extends JFrame implements ActionListener{
 		GridBagConstraints gbc_btnRectangle = new GridBagConstraints();
 		gbc_btnRectangle.gridwidth = 4;
 		gbc_btnRectangle.insets = new Insets(0, 0, 5, 5);
-		gbc_btnRectangle.gridx = 9;
+		gbc_btnRectangle.gridx = 10;
 		gbc_btnRectangle.gridy = 3;
 		contentPane.add(btnRectangle, gbc_btnRectangle);
 		
 		JButton btnCircle = new JButton("Circle");
 		GridBagConstraints gbc_btnCircle = new GridBagConstraints();
 		gbc_btnCircle.insets = new Insets(0, 0, 5, 5);
-		gbc_btnCircle.gridx = 13;
+		gbc_btnCircle.gridx = 14;
 		gbc_btnCircle.gridy = 3;
 		contentPane.add(btnCircle, gbc_btnCircle);
+		
+		JButton btnDonut = new JButton("Donut");
+		GridBagConstraints gbc_btnDonut = new GridBagConstraints();
+		gbc_btnDonut.insets = new Insets(0, 0, 5, 5);
+		gbc_btnDonut.gridx = 15;
+		gbc_btnDonut.gridy = 3;
+		contentPane.add(btnDonut, gbc_btnDonut);
 		
 		JButton btnDelete = new JButton("Delete");
 		GridBagConstraints gbc_btnDelete = new GridBagConstraints();
 		gbc_btnDelete.insets = new Insets(0, 0, 0, 5);
-		gbc_btnDelete.gridx = 5;
+		gbc_btnDelete.gridx = 6;
 		gbc_btnDelete.gridy = 4;
 		contentPane.add(btnDelete, gbc_btnDelete);
+		
+		JButton btnColor = new JButton("Color");
+		btnColor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		GridBagConstraints gbc_btnColor = new GridBagConstraints();
+		gbc_btnColor.insets = new Insets(0, 0, 0, 5);
+		gbc_btnColor.gridx = 7;
+		gbc_btnColor.gridy = 4;
+		contentPane.add(btnColor, gbc_btnColor);
+	}
+	
+	protected void color(ActionEvent e) {
+		color = JColorChooser.showDialog(null, "Choose color",Color.BLACK);
+		btnColor.setBackground(color);
+		for(Shape s : shapes) {
+			if(s instanceof Point){
+					repaint();
+					s.setC(color);
+					repaint();
+			}else if(s instanceof Line) {
+					repaint();
+					s.setC(color);
+					repaint();
+			}else if(s instanceof Rectangle) {
+					repaint();
+					s.setC(color);
+					repaint();
+			}else if(s instanceof Circle) {
+				if(s.getClass() != Circle.class) {
+					repaint();
+					s.setC(color);
+					repaint();
+				}else {
+					repaint();
+					s.setC(color);
+					repaint();
+				}		
+			}
+		}
+	}
+
+	protected void btnSelected(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	protected void btnDonut(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	protected void btnCircle(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	protected void btnRectangle(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	protected void btnPoint(MouseEvent e) {
+		Point p = new Point(e.getX(),e.getY(),selected);
+		p.setC(color);
+		shapes.add(p);
+		repaint();
+	}
+
+	protected void btnLine(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
