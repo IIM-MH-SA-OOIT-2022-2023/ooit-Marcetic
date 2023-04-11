@@ -82,6 +82,10 @@ public class Line extends Shape{
 		
 	}
 	
+	public void setStartPoint(Point startPoint) {
+		this.startPoint = startPoint;
+	}
+	
 	public Point getStartPoint() {
 		return startPoint;
 	}

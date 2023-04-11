@@ -46,7 +46,8 @@ public class AppFrame extends JFrame{
 	private PnlDraw panel= new PnlDraw();
 	private boolean selected;
 	private int brojac = 0;
-	private Point startPoint, endPoint;
+	private Point startPoint;
+	private Point endPoint;
 	private Color color;
 	private JToggleButton btnSelect;
 	private JToggleButton btnModify;
@@ -58,7 +59,10 @@ public class AppFrame extends JFrame{
 	private JToggleButton btnDonut;
 	private JToggleButton btnCircle;
 	private DlgRectangle dlgRectangle;
-
+	private DlgPoint dlgPoint;
+	private DlgLine dlgLine;
+	private DlgCircle dlgCircle;
+	private DlgDonut dlgDonut;
 	
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	
@@ -190,6 +194,20 @@ public class AppFrame extends JFrame{
 						}
 				}
 				}
+				else if(btnDelete.isSelected()) {
+					if(panel.getShapes().isEmpty()) {
+						JOptionPane.showMessageDialog(null, "Panel is empty!", "ERROR", JOptionPane.ERROR_MESSAGE);
+					}else if(!panel.getShapes().isEmpty() && slctd.isEmpty()) {
+						JOptionPane.showMessageDialog(null, "There is no selected object.", "ERROR", JOptionPane.ERROR_MESSAGE);
+					}else{
+						if(JOptionPane.showConfirmDialog(null, "Do you really want to delete the selected object?", "ERASE",
+								JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
+								panel.getShapes().removeAll(slctd);
+								slctd.clear();
+								repaint();	
+						}
+					}
+				}
 				else if(btnPoint.isSelected()) {
 					Point p = new Point(e.getX(),e.getY(),selected);
 					panel.getShapes().add(p);
@@ -244,8 +262,9 @@ public class AppFrame extends JFrame{
 					dlgCircle = new DlgCircle();
 					dlgCircle.setVisible(true);
 					
+					
 					if(dlgCircle.isCommited()) {
-						int r = Integer.parseInt(dlgCircle.getRadius().getText());
+						int r = Integer.parseInt(dlgCircle.getTextFieldRadius().getText());
 						Circle c = new Circle(center, r, selected);
 						panel.getShapes().remove(center);
 						panel.getShapes().add(c);
@@ -265,9 +284,9 @@ public class AppFrame extends JFrame{
 					dlgDonut.setVisible(true);
 					
 					if(dlgDonut.isCommited()) {
-						int outerR = Integer.parseInt(dlgDonut.getOutR().getText());
-						int innerR = Integer.parseInt(dlgDonut.getInR().getText());
-						Donut d = new Donut(center,outerR,innerR,selected);
+						int radius = Integer.parseInt(dlgDonut.getTextFieldRadius().getText());
+						int innerR = Integer.parseInt(dlgDonut.getTextFieldInnerR().getText());
+						Donut d = new Donut(center,radius,innerR,selected);
 						panel.getShapes().remove(center);
 						panel.getShapes().add(d);
 						d.setC(color);
@@ -307,35 +326,125 @@ public class AppFrame extends JFrame{
 					}
 				}
 				else if(btnModify.isSelected()) {
-					color = JColorChooser.showDialog(null, "Choose color",Color.BLACK);
-					btnColor.setBackground(color);
-					for(Shape s : slctd) {
-						if(s instanceof Point){
-								repaint();
-								s.setC(color);
-								repaint();
-						}else if(s instanceof Line) {
-								repaint();
-								s.setC(color);
-								repaint();
-						}else if(s instanceof Rectangle) {
-								repaint();
-								s.setC(color);
-								repaint();
-						}else if(s instanceof Circle) {
-							if(s.getClass() != Circle.class) {
-								repaint();
-								s.setC(color);
-								repaint();
-							}else {
-								repaint();
-								s.setC(color);
-								repaint();
-							}		
+					if(panel.getShapes().isEmpty() || slctd.isEmpty()) {
+						JOptionPane.showMessageDialog(null, "Please select object to modify!", "ERROR", JOptionPane.ERROR_MESSAGE);
+					}else if(slctd.size() > 1) {
+						JOptionPane.showMessageDialog(null, "You can modify only one selected object!", "ERROR", JOptionPane.ERROR_MESSAGE);
+					}else if(slctd.size() == 1) {
+						for(Shape s : panel.getShapes()) {
+							if(s instanceof Point) {
+								if(s.isSelected()) {
+									Point temp = (Point) s;
+									Point p = new Point();
+									
+									dlgPoint = new DlgPoint();
+									dlgPoint.getTextFieldX().setText(Integer.toString(temp.getX()));
+									dlgPoint.getTextFieldY().setText(Integer.toString(temp.getY()));
+									dlgPoint.setVisible(true);
+									
+									if(dlgPoint.isCommited()) {
+										p.setC(temp.getC());
+										p.setSelected(false);
+										p.moveOn(Integer.parseInt(dlgPoint.getTextFieldX().getText()), Integer.parseInt(dlgPoint.getTextFieldY().getText()));
+										panel.getShapes().set(panel.getShapes().indexOf(temp), p);
+										repaint();
+										slctd.clear();
+									}
+								}
+							}else if(s instanceof Line) {
+								if(s.isSelected()) {
+									Line temp = (Line) s;
+									Line l = new Line();
+									
+									dlgLine = new DlgLine();
+									dlgLine.getTextFieldStartPointX().setText(Integer.toString(temp.getStartPoint().getX()));
+									dlgLine.getTextFieldStartPointY().setText(Integer.toString(temp.getStartPoint().getY()));
+									dlgLine.getTextFieldEndPointX().setText(Integer.toString(temp.getEndPoint().getX()));
+									dlgLine.getTextFieldEndPointY().setText(Integer.toString(temp.getEndPoint().getY()));
+									dlgLine.setVisible(true);
+									
+									if(dlgLine.isCommited()) {
+										l.setC(temp.getC());
+										l.setSelected(false);
+										l.setStartPoint(new Point(Integer.parseInt(dlgLine.getTextFieldStartPointX().getText()), Integer.parseInt(dlgLine.getTextFieldStartPointY().getText())));
+										l.setEndPoint(new Point(Integer.parseInt(dlgLine.getTextFieldEndPointX().getText()), Integer.parseInt(dlgLine.getTextFieldEndPointY().getText())));
+										panel.getShapes().set(panel.getShapes().indexOf(temp), l);
+										repaint();
+										slctd.clear();
+									}
+								}
+							}else if(s instanceof Rectangle) {
+								if(s.isSelected()) {
+									Rectangle temp = (Rectangle) s;
+									Rectangle r = new Rectangle();
+									
+									dlgRectangle = new DlgRectangle();
+									dlgRectangle.getHeightField().setText(Integer.toString(temp.getHeight()));
+									dlgRectangle.getWidthField().setText(Integer.toString(temp.getWidth()));
+									dlgRectangle.getTextFieldUpperLeftX().setText(Integer.toString(temp.getUpperLeft().getX()));
+									dlgRectangle.getTextFieldUpperLeftY().setText(Integer.toString(temp.getUpperLeft().getY()));
+									dlgRectangle.setVisible(true);
+									
+									if(dlgRectangle.isCommited()) {
+										r.setC(temp.getC());
+										r.setSelected(false);
+										r.setHeight(Integer.parseInt(dlgRectangle.getHeightField().getText()));
+										r.setWidth(Integer.parseInt(dlgRectangle.getWidthField().getText()));
+										r.setUpperLeft(new Point(Integer.parseInt(dlgRectangle.getTextFieldUpperLeftX().getText()), Integer.parseInt(dlgRectangle.getTextFieldUpperLeftY().getText())));
+										panel.getShapes().set(panel.getShapes().indexOf(temp), r);
+										repaint();
+										slctd.clear();
+									}
+								}
+							}else if(s instanceof Circle) {
+								if(s.isSelected()) {
+									if(s.getClass() != Circle.class) {
+											Donut temp = (Donut) s;
+											Donut d = new Donut();
+											
+											dlgDonut = new DlgDonut();
+											dlgDonut.getTextFieldInnerR().setText(Integer.toString(temp.getInnerR()));
+											dlgDonut.getTextFieldRadius().setText(Integer.toString(temp.getR()));
+											dlgDonut.getTextFieldCenterX().setText(Integer.toString(temp.getCenter().getX()));
+											dlgDonut.getTextFieldCenterY().setText(Integer.toString(temp.getCenter().getY()));
+											dlgDonut.setVisible(true);
+											
+											if(dlgDonut.isCommited()) {
+												d.setC(temp.getC());
+												d.setSelected(false);
+												d.setInnerR(Integer.parseInt(dlgDonut.getTextFieldInnerR().getText()));
+												d.setR(Integer.parseInt(dlgDonut.getTextFieldRadius().getText()));
+												d.setCenter(new Point(Integer.parseInt(dlgDonut.getTextFieldCenterX().getText()), Integer.parseInt(dlgDonut.getTextFieldCenterY().getText())));
+												panel.getShapes().set(panel.getShapes().indexOf(temp), d);
+												repaint();
+												slctd.clear();
+										}
+									}else {
+											Circle temp = (Circle) s;
+											Circle c = new Circle();
+											
+											dlgCircle = new DlgCircle();
+											dlgCircle.getTextFieldRadius().setText(Integer.toString(temp.getR()));
+											dlgCircle.getTextFieldCenterX().setText(Integer.toString(temp.getCenter().getX()));
+											dlgCircle.getTextFieldCenterY().setText(Integer.toString(temp.getCenter().getY()));
+											dlgCircle.setVisible(true);
+											
+											if(dlgCircle.isCommited()) {
+												c.setC(temp.getC());
+												c.setSelected(false);
+												c.setR(Integer.parseInt(dlgCircle.getTextFieldRadius().getText()));
+												c.setCenter(new Point(Integer.parseInt(dlgCircle.getTextFieldCenterX().getText()), Integer.parseInt(dlgCircle.getTextFieldCenterY().getText())));
+												panel.getShapes().set(panel.getShapes().indexOf(temp), c);
+												repaint();
+												slctd.clear();
+										}
+									}
+								}
+							}
 						}
 					}
-				}
 
+			}
 			}
 		});
 	}
