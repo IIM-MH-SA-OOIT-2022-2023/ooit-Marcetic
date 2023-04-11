@@ -4,6 +4,8 @@ import javax.swing.JPanel;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.awt.Color;
+import geometry.Shape;
+
 public class PnlDraw extends JPanel {
 
 	/**
@@ -14,9 +16,8 @@ public class PnlDraw extends JPanel {
 	}
 	
 	private static final long serialVerionUID=1L;
-	
-	
- private ArrayList<Shape> shapes = new ArrayList<Shape>();
+	private Shape selected;
+    private ArrayList<Shape> shapes = new ArrayList<Shape>();
 	
 	
 	public void setShapes(ArrayList<Shape> shapes) {
@@ -39,6 +40,10 @@ public class PnlDraw extends JPanel {
 			
 		}
 				
+	}
+	
+	public Shape getSelected() {
+		return selected;
 	}
 	
 	public ArrayList<Shape> getShapes(){
