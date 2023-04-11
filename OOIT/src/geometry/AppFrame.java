@@ -34,14 +34,15 @@ import javax.swing.JOptionPane;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JColorChooser;
-public class AppFrame extends JFrame implements ActionListener{
+
+public class AppFrame extends JFrame{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private ArrayList<Shape> shapes = new ArrayList<Shape>();
+	private ArrayList<Shape> slctd = new ArrayList<Shape>();
 	private PnlDraw panel= new PnlDraw();
 	private boolean selected;
 	private int brojac = 0;
@@ -56,294 +57,289 @@ public class AppFrame extends JFrame implements ActionListener{
 	private JToggleButton btnColor;
 	private JToggleButton btnDonut;
 	private JToggleButton btnCircle;
+	private DlgRectangle dlgRectangle;
 
 	
-	public void setShapes(ArrayList<Shape> shapes) {
-		this.shapes = shapes;
-	}
-	
-	
-	private MouseListener ml = new MouseAdapter() {
-		@Override
-		public void mouseClicked(MouseEvent e) {
-			if(btnPoint.isSelected()) {
-				btnPoint(e);	
-			}else if(btnLine.isSelected()) {
-				btnLine(e);	
-			}else if(btnRectangle.isSelected()) {
-				btnRectangle(e);	
-			}else if(btnCircle.isSelected()) {
-				btnCircle(e);
-			}else if(btnDonut.isSelected()) {
-				btnDonut(e);
-			}else if(btnSelect.isSelected()) {
-				btnSelected(e);
-			}
-		}
-
-
-	};
 	private final ButtonGroup buttonGroup = new ButtonGroup();
-	private final ButtonGroup buttonGroup_1 = new ButtonGroup();
-	private final ButtonGroup buttonGroup_2 = new ButtonGroup();
-	private final ButtonGroup buttonGroup_3 = new ButtonGroup();
-	private final ButtonGroup buttonGroup_4 = new ButtonGroup();
-	private final ButtonGroup buttonGroup_5 = new ButtonGroup();
-	private final ButtonGroup buttonGroup_6 = new ButtonGroup();
-	private final ButtonGroup buttonGroup_7 = new ButtonGroup();
+	
 
 	/**
 	 * Create the frame.
 	 */
 	public AppFrame() {
+		
+		JPanel buttons = new JPanel();
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 526, 404);
+		setBounds(100, 100, 779, 544);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0,0));
 		setContentPane(contentPane);
+		contentPane.add(buttons, BorderLayout.SOUTH);
 		
-		GridBagLayout gbl_contentPane = new GridBagLayout();
-		gbl_contentPane.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-		gbl_contentPane.rowHeights = new int[]{0, 0, 0, 0, 0, 0};
-		gbl_contentPane.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
-		contentPane.setLayout(gbl_contentPane);
-		
-		JPanel panel = new JPanel();
-		GridBagConstraints gbc_panel = new GridBagConstraints();
-		gbc_panel.gridheight = 2;
-		gbc_panel.insets = new Insets(0, 0, 5, 5);
-		gbc_panel.gridwidth = 11;
-		gbc_panel.fill = GridBagConstraints.BOTH;
-		gbc_panel.gridx = 6;
-		gbc_panel.gridy = 1;
-		contentPane.add(panel, gbc_panel);
 		panel.setBorder(new LineBorder(new Color(0,0,0)));
 		contentPane.add(panel, BorderLayout.CENTER);
 		panel.setLayout(new BorderLayout(0, 0));
-		panel.addMouseListener(ml);
+		 
+		 
+		  btnSelect = new JToggleButton("Select");
+		  buttons.add(btnSelect);
+		  buttonGroup.add(btnSelect);
+		 
+		 
+		 btnDelete = new JToggleButton("Delete");
+		 buttons.add(btnDelete);
+		 buttonGroup.add(btnDelete);
+			
 		
-		JButton btnSelect = new JButton("Select");
-		btnSelect.addMouseListener(new MouseAdapter() {
+		
+		 btnPoint = new JToggleButton("Point");
+		buttons.add(btnPoint);
+		buttonGroup.add(btnPoint);
+		
+		
+		 btnLine = new JToggleButton("Line");
+		buttons.add(btnLine);
+		buttonGroup.add(btnLine);
+		
+		
+		 btnRectangle = new JToggleButton("Rectangle");
+		buttons.add(btnRectangle);
+		buttonGroup.add(btnRectangle);
+		
+		 btnCircle = new JToggleButton("Circle");
+		buttons.add(btnCircle);
+		buttonGroup.add(btnCircle);
+		
+		
+		btnDonut = new JToggleButton("Donut");
+		buttons.add(btnDonut);
+		buttonGroup.add(btnDonut);
+		
+		
+		btnColor = new JToggleButton("Color");
+		buttons.add(btnColor);
+		buttonGroup.add(btnColor);
+		
+		btnModify = new JToggleButton("Modify");
+		buttons.add(btnModify);
+		buttonGroup.add(btnModify);
+		
+		
+		panel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				for(Shape s : panel.getShapes()){
-					if(s.contains(e.getX(),e.getY()))
-					{
+				if(btnSelect.isSelected()) {
+					for(Shape s : panel.getShapes()){
+						if(s.contains(e.getX(),e.getY()))
+						{
+							if(s instanceof Point){
+								if(!s.isSelected()) {
+									s.setSelected(true);
+									slctd.add(s);
+									repaint();
+								}else {
+									s.setSelected(false);
+									slctd.remove(s);
+									repaint();
+								}
+							}else if(s instanceof Line) {
+								if(!s.isSelected()) {
+									s.setSelected(true);
+									slctd.add(s);
+									repaint();
+								}else {
+									s.setSelected(false);
+									slctd.remove(s);
+									repaint();
+								}
+							}else if(s instanceof Rectangle) {
+								if(!s.isSelected()) {
+									s.setSelected(true);
+									slctd.add(s);
+									repaint();
+								}else {
+									s.setSelected(false);
+									slctd.remove(s);
+									repaint();
+								}
+							}else if(s instanceof Circle) {
+								if(s.getClass() != Circle.class) {
+									if(!s.isSelected()) {
+										s.setSelected(true);
+										slctd.add(s);
+										repaint();
+									}else {
+										s.setSelected(false);
+										slctd.remove(s);
+										repaint();
+									}
+								}else {
+									if(!s.isSelected()) {
+										s.setSelected(true);
+										slctd.add(s);
+										repaint();
+									}else {
+										s.setSelected(false);
+										slctd.remove(s);
+										repaint();
+									}
+								}
+							}
+						}
+				}
+				}
+				else if(btnPoint.isSelected()) {
+					Point p = new Point(e.getX(),e.getY(),selected);
+					panel.getShapes().add(p);
+					p.setC(color);
+					slctd.add(p);
+					repaint();
+				}
+				else if(btnLine.isSelected()) {
+					
+					if(brojac==0) {
+						startPoint = new Point(e.getX(),e.getY());
+						panel.getShapes().add(startPoint);
+						startPoint.setC(color);
+						repaint();
+					}else {
+						endPoint = new Point(e.getX(),e.getY());
+						Line l = new Line(startPoint,endPoint,selected);
+						panel.getShapes().add(l);
+						panel.getShapes().remove(startPoint);
+						l.setC(color);
+						repaint();
+						brojac = 0;
+					}
+				
+				}
+				else if(btnRectangle.isSelected()) {
+					Point upperLeft = new Point(e.getX(),e.getY());
+					panel.getShapes().add(upperLeft);
+					upperLeft.setC(color);
+					repaint();
+					dlgRectangle = new DlgRectangle();
+					dlgRectangle.setVisible(true);
+					
+					if(dlgRectangle.isCommited()) {
+						int width = Integer.parseInt(dlgRectangle.getWidthField().getText());
+						int height = Integer.parseInt(dlgRectangle.getHeightField().getText());
+						Rectangle r = new Rectangle(upperLeft,width,height,selected);
+						panel.getShapes().remove(upperLeft);
+						panel.getShapes().add(r);
+						r.setC(color);
+						repaint();	
+					}else {
+						panel.getShapes().remove(upperLeft);
+						repaint();
+					}
+				}
+				else if(btnCircle.isSelected()) {
+					Point center = new Point(e.getX(),e.getY());
+					panel.getShapes().add(center);
+					center.setC(color);
+					repaint();
+					dlgCircle = new DlgCircle();
+					dlgCircle.setVisible(true);
+					
+					if(dlgCircle.isCommited()) {
+						int r = Integer.parseInt(dlgCircle.getRadius().getText());
+						Circle c = new Circle(center, r, selected);
+						panel.getShapes().remove(center);
+						panel.getShapes().add(c);
+						c.setC(color);
+						repaint();
+					}else {
+						panel.getShapes().remove(center);
+						repaint();
+					}
+				}
+				else if(btnDonut.isSelected()) {
+					Point center = new Point(e.getX(),e.getY());
+					panel.getShapes().add(center);
+					center.setC(color);
+					repaint();
+					dlgDonut = new DlgDonut();
+					dlgDonut.setVisible(true);
+					
+					if(dlgDonut.isCommited()) {
+						int outerR = Integer.parseInt(dlgDonut.getOutR().getText());
+						int innerR = Integer.parseInt(dlgDonut.getInR().getText());
+						Donut d = new Donut(center,outerR,innerR,selected);
+						panel.getShapes().remove(center);
+						panel.getShapes().add(d);
+						d.setC(color);
+						repaint();
+					}else {
+						panel.getShapes().remove(center);
+						repaint();
+					}
+				}
+				else if(btnColor.isSelected()) {
+					color = JColorChooser.showDialog(null, "Choose color",Color.BLACK);
+					btnColor.setBackground(color);
+					for(Shape s : slctd) {
 						if(s instanceof Point){
-							if(!s.isSelected()) {
-								s.setSelected(true);
-								shapes.add(s);
 								repaint();
-							}else {
-								s.setSelected(false);
-								shapes.remove(s);
+								s.setC(color);
 								repaint();
-							}
 						}else if(s instanceof Line) {
-							if(!s.isSelected()) {
-								s.setSelected(true);
-								shapes.add(s);
 								repaint();
-							}else {
-								s.setSelected(false);
-								shapes.remove(s);
+								s.setC(color);
 								repaint();
-							}
 						}else if(s instanceof Rectangle) {
-							if(!s.isSelected()) {
-								s.setSelected(true);
-								shapes.add(s);
 								repaint();
-							}else {
-								s.setSelected(false);
-								shapes.remove(s);
+								s.setC(color);
 								repaint();
-							}
 						}else if(s instanceof Circle) {
 							if(s.getClass() != Circle.class) {
-								if(!s.isSelected()) {
-									s.setSelected(true);
-									shapes.add(s);
-									repaint();
-								}else {
-									s.setSelected(false);
-									shapes.remove(s);
-									repaint();
-								}
+								repaint();
+								s.setC(color);
+								repaint();
 							}else {
-								if(!s.isSelected()) {
-									s.setSelected(true);
-									shapes.add(s);
-									repaint();
-								}else {
-									s.setSelected(false);
-									shapes.remove(s);
-									repaint();
-								}
-							}
+								repaint();
+								s.setC(color);
+								repaint();
+							}		
 						}
 					}
 				}
-			}
-
-		});
-		
-		buttonGroup.add(btnSelect);
-			
-		GridBagConstraints gbc_btnSelect = new GridBagConstraints();
-		gbc_btnSelect.insets = new Insets(0, 0, 5, 5);
-		gbc_btnSelect.gridx = 6;
-		gbc_btnSelect.gridy = 3;
-		contentPane.add(btnSelect, gbc_btnSelect);
-		
-		JButton btnPoint = new JButton("Point");
-		buttonGroup_1.add(btnPoint);
-		
-		GridBagConstraints gbc_btnPoint = new GridBagConstraints();
-		gbc_btnPoint.insets = new Insets(0, 0, 5, 5);
-		gbc_btnPoint.gridx = 8;
-		gbc_btnPoint.gridy = 3;
-		contentPane.add(btnPoint, gbc_btnPoint);
-		
-		JButton btnLine = new JButton("Line");
-		buttonGroup_2.add(btnLine);
-		GridBagConstraints gbc_btnLine = new GridBagConstraints();
-		gbc_btnLine.insets = new Insets(0, 0, 5, 5);
-		gbc_btnLine.gridx = 9;
-		gbc_btnLine.gridy = 3;
-		contentPane.add(btnLine, gbc_btnLine);
-		
-		JButton btnRectangle = new JButton("Rectangle");
-		buttonGroup_3.add(btnRectangle);
-		GridBagConstraints gbc_btnRectangle = new GridBagConstraints();
-		gbc_btnRectangle.gridwidth = 4;
-		gbc_btnRectangle.insets = new Insets(0, 0, 5, 5);
-		gbc_btnRectangle.gridx = 10;
-		gbc_btnRectangle.gridy = 3;
-		contentPane.add(btnRectangle, gbc_btnRectangle);
-		
-		JButton btnCircle = new JButton("Circle");
-		buttonGroup_4.add(btnCircle);
-		GridBagConstraints gbc_btnCircle = new GridBagConstraints();
-		gbc_btnCircle.insets = new Insets(0, 0, 5, 5);
-		gbc_btnCircle.gridx = 14;
-		gbc_btnCircle.gridy = 3;
-		contentPane.add(btnCircle, gbc_btnCircle);
-		
-		JButton btnDonut = new JButton("Donut");
-		buttonGroup_5.add(btnDonut);
-		GridBagConstraints gbc_btnDonut = new GridBagConstraints();
-		gbc_btnDonut.insets = new Insets(0, 0, 5, 5);
-		gbc_btnDonut.gridx = 15;
-		gbc_btnDonut.gridy = 3;
-		contentPane.add(btnDonut, gbc_btnDonut);
-		
-		JButton btnDelete = new JButton("Delete");
-		buttonGroup_6.add(btnDelete);
-		GridBagConstraints gbc_btnDelete = new GridBagConstraints();
-		gbc_btnDelete.insets = new Insets(0, 0, 0, 5);
-		gbc_btnDelete.gridx = 6;
-		gbc_btnDelete.gridy = 4;
-		contentPane.add(btnDelete, gbc_btnDelete);
-		
-		JButton btnColor = new JButton("Color");
-		buttonGroup_7.add(btnColor);
-		btnColor.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				color = JColorChooser.showDialog(null, "Choose color",Color.BLACK);
-				btnColor.setBackground(color);
-				for(Shape s : shapes) {
-					if(s instanceof Point){
-							repaint();
-							s.setC(color);
-							repaint();
-					}else if(s instanceof Line) {
-							repaint();
-							s.setC(color);
-							repaint();
-					}else if(s instanceof Rectangle) {
-							repaint();
-							s.setC(color);
-							repaint();
-					}else if(s instanceof Circle) {
-						if(s.getClass() != Circle.class) {
-							repaint();
-							s.setC(color);
-							repaint();
-						}else {
-							repaint();
-							s.setC(color);
-							repaint();
-						}		
+				else if(btnModify.isSelected()) {
+					color = JColorChooser.showDialog(null, "Choose color",Color.BLACK);
+					btnColor.setBackground(color);
+					for(Shape s : slctd) {
+						if(s instanceof Point){
+								repaint();
+								s.setC(color);
+								repaint();
+						}else if(s instanceof Line) {
+								repaint();
+								s.setC(color);
+								repaint();
+						}else if(s instanceof Rectangle) {
+								repaint();
+								s.setC(color);
+								repaint();
+						}else if(s instanceof Circle) {
+							if(s.getClass() != Circle.class) {
+								repaint();
+								s.setC(color);
+								repaint();
+							}else {
+								repaint();
+								s.setC(color);
+								repaint();
+							}		
+						}
 					}
 				}
+
 			}
 		});
-		GridBagConstraints gbc_btnColor = new GridBagConstraints();
-		gbc_btnColor.insets = new Insets(0, 0, 0, 5);
-		gbc_btnColor.gridx = 7;
-		gbc_btnColor.gridy = 4;
-		contentPane.add(btnColor, gbc_btnColor);
 	}
 	
-	
-
-	protected void btnSelected(MouseEvent e) {
-			for(Shape s : shapes){
-				if(s.contains(e.getX(),e.getY()))
-				{
-					if(s instanceof Point){
-						if(!s.isSelected()) {
-							s.setSelected(true);
-							shapes.add(s);
-							repaint();
-						}else {
-							s.setSelected(false);
-							shapes.remove(s);
-							repaint();
-						}
-		}
-	}
-			}
-		}
-
-	protected void btnDonut(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	protected void btnCircle(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	protected void btnRectangle(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	protected void btnPoint(MouseEvent e) {
-		Point p = new Point(e.getX(),e.getY(),selected);
-		p.setC(color);
-		shapes.add(p);
-		repaint();
-	}
-
-	protected void btnLine(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
 
 public static void main(String[] args) {
 	EventQueue.invokeLater(new Runnable() {
@@ -359,7 +355,91 @@ public static void main(String[] args) {
 }
 }
 
+
 /*
- public void actionPerformed(ActionEvent e) {
-				
-			}*/
+  btnSelect.addMouseListener(new MouseAdapter() {
+		  	@Override
+		  	public void mouseClicked(MouseEvent e) {
+		  		for(Shape s : panel.getShapes()){
+		  			if(s.contains(e.getX(),e.getY()))
+		  			{
+		  				if(s instanceof Point){
+		  					if(!s.isSelected()) {
+		  						s.setSelected(true);
+		  						slctd.add(s);
+		  						repaint();
+		  					}else {
+		  						s.setSelected(false);
+		  						slctd.remove(s);
+		  						repaint();
+		  					}
+		  				}else if(s instanceof Line) {
+		  					if(!s.isSelected()) {
+		  						s.setSelected(true);
+		  						slctd.add(s);
+		  						repaint();
+		  					}else {
+		  						s.setSelected(false);
+		  						slctd.remove(s);
+		  						repaint();
+		  					}
+		  				}else if(s instanceof Rectangle) {
+		  					if(!s.isSelected()) {
+		  						s.setSelected(true);
+		  						slctd.add(s);
+		  						repaint();
+		  					}else {
+		  						s.setSelected(false);
+		  						slctd.remove(s);
+		  						repaint();
+		  					}
+		  				}else if(s instanceof Circle) {
+		  					if(s.getClass() != Circle.class) {
+		  						if(!s.isSelected()) {
+		  							s.setSelected(true);
+		  							slctd.add(s);
+		  							repaint();
+		  						}else {
+		  							s.setSelected(false);
+		  							slctd.remove(s);
+		  							repaint();
+		  						}
+		  					}else {
+		  						if(!s.isSelected()) {
+		  							s.setSelected(true);
+		  							slctd.add(s);
+		  							repaint();
+		  						}else {
+		  							s.setSelected(false);
+		  							slctd.remove(s);
+		  							repaint();
+		  						}
+		  					}
+		  				}
+		  			}
+		  		}
+		  	}
+
+		  });
+		  
+		  
+		  
+		  			brojac++;
+				switch(brojac) {
+					case 1:
+						startPoint = new Point(e.getX(),e.getY());
+						panel.getShapes().add(startPoint);
+						startPoint.setC(color);
+						repaint();
+						break;
+					case 2:
+						endPoint = new Point(e.getX(),e.getY());
+						Line l = new Line(startPoint,endPoint,selected);
+						panel.getShapes().add(l);
+						panel.getShapes().remove(startPoint);
+						l.setC(color);
+						repaint();
+						brojac = 0;
+						break;
+				}
+		  */
