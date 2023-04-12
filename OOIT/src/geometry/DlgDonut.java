@@ -132,6 +132,7 @@ public class DlgDonut extends JDialog {
 		}
 		{
 			textFieldAxisX = new JTextField();
+			textFieldAxisX.setEnabled(false);
 			GridBagConstraints gbc_textFieldAxisX = new GridBagConstraints();
 			gbc_textFieldAxisX.gridwidth = 3;
 			gbc_textFieldAxisX.insets = new Insets(0, 0, 5, 5);
@@ -172,6 +173,7 @@ public class DlgDonut extends JDialog {
 		}
 		{
 			textFieldAxisY = new JTextField();
+			textFieldAxisY.setEnabled(false);
 			GridBagConstraints gbc_textFieldAxisY = new GridBagConstraints();
 			gbc_textFieldAxisY.gridwidth = 3;
 			gbc_textFieldAxisY.insets = new Insets(0, 0, 0, 5);

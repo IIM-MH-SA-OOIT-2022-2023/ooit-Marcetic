@@ -34,8 +34,16 @@ public class Rectangle extends Shape {
 	}
 	
 	public boolean contains(int x, int y) {
-		return upperLeft.getX() < x && (upperLeft.getX()+width>x) && 
-				upperLeft.getY()<y && upperLeft.getY()+height>y;
+		boolean containsX = false;
+		if(x >= upperLeft.getX() && x <= (upperLeft.getX() + width)) {
+			containsX = true;
+		}
+		
+		boolean containsY = false;
+		if(y >= upperLeft.getY() && y <= (upperLeft.getY() + height)) {
+			containsY = true;
+		}
+		return containsX && containsY;
 	}
 	
 	public boolean contains(Point p) {
@@ -84,6 +92,12 @@ public class Rectangle extends Shape {
 	@Override
 	public void draw(Graphics g) {
 		g.drawRect(upperLeft.getX(), upperLeft.getY(), width, height);
+		if(selected) {
+			g.drawRect(upperLeft.getX() - 3, upperLeft.getY() - 3, 6, 6);
+			g.drawRect(upperLeft.getX() + width - 3, upperLeft.getY() - 3, 6, 6);
+			g.drawRect(upperLeft.getX() - 3, upperLeft.getY() + height - 3, 6, 6);
+			g.drawRect(upperLeft.getX() + width - 3, upperLeft.getY() + height - 3, 6, 6);
+		}
 	}
 	
 	@Override
