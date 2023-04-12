@@ -3,8 +3,6 @@ package geometry;
 import javax.swing.JPanel;
 import java.awt.Graphics;
 import java.util.ArrayList;
-import java.awt.Color;
-import geometry.Shape;
 
 public class PnlDraw extends JPanel {
 
@@ -15,7 +13,7 @@ public class PnlDraw extends JPanel {
 
 	}
 	
-	private static final long serialVerionUID=1L;
+	
 	private Shape selected;
     private ArrayList<Shape> shapes = new ArrayList<Shape>();
 	

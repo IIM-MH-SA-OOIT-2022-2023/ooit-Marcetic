@@ -7,8 +7,6 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.BoxLayout;
-import java.awt.GridLayout;
 import javax.swing.JTextField;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
@@ -25,8 +23,8 @@ public class DlgDonut extends JDialog {
 	private boolean commited;
 	private JTextField textFieldInnerR;
 	private JTextField textFieldRadius;
-	private JTextField textFieldCenterX;
-	private JTextField textFieldCenterY;
+	private JTextField textFieldAxisX;
+	private JTextField textFieldAxisY;
 	
 	public boolean isCommited() {
 		return commited;
@@ -53,20 +51,22 @@ public class DlgDonut extends JDialog {
 	}
 
 
-	public JTextField getTextFieldCenterX() {
-		return textFieldCenterX;
+
+
+	public JTextField getTextFieldAxisX() {
+		return textFieldAxisX;
 	}
 
-	public void setTextFieldCenterX(JTextField textFieldCenterX) {
-		this.textFieldCenterX = textFieldCenterX;
+	public void setTextFieldAxisX(JTextField textFieldAxisX) {
+		this.textFieldAxisX = textFieldAxisX;
 	}
 
-	public JTextField getTextFieldCenterY() {
-		return textFieldCenterY;
+	public JTextField getTextFieldAxisY() {
+		return textFieldAxisY;
 	}
 
-	public void setTextFieldCenterY(JTextField textFieldCenterY) {
-		this.textFieldCenterY = textFieldCenterY;
+	public void setTextFieldAxisY(JTextField textFieldAxisY) {
+		this.textFieldAxisY = textFieldAxisY;
 	}
 
 	public JPanel getContentPanel() {
@@ -122,7 +122,7 @@ public class DlgDonut extends JDialog {
 			textFieldRadius.setColumns(10);
 		}
 		{
-			JLabel lblNewLabel_2 = new JLabel("Modify center X");
+			JLabel lblNewLabel_2 = new JLabel("Modify axis X");
 			GridBagConstraints gbc_lblNewLabel_2 = new GridBagConstraints();
 			gbc_lblNewLabel_2.insets = new Insets(0, 0, 5, 5);
 			gbc_lblNewLabel_2.anchor = GridBagConstraints.EAST;
@@ -131,15 +131,15 @@ public class DlgDonut extends JDialog {
 			contentPanel.add(lblNewLabel_2, gbc_lblNewLabel_2);
 		}
 		{
-			textFieldCenterX = new JTextField();
-			GridBagConstraints gbc_textFieldCenterX = new GridBagConstraints();
-			gbc_textFieldCenterX.gridwidth = 3;
-			gbc_textFieldCenterX.insets = new Insets(0, 0, 5, 5);
-			gbc_textFieldCenterX.fill = GridBagConstraints.HORIZONTAL;
-			gbc_textFieldCenterX.gridx = 7;
-			gbc_textFieldCenterX.gridy = 1;
-			contentPanel.add(textFieldCenterX, gbc_textFieldCenterX);
-			textFieldCenterX.setColumns(10);
+			textFieldAxisX = new JTextField();
+			GridBagConstraints gbc_textFieldAxisX = new GridBagConstraints();
+			gbc_textFieldAxisX.gridwidth = 3;
+			gbc_textFieldAxisX.insets = new Insets(0, 0, 5, 5);
+			gbc_textFieldAxisX.fill = GridBagConstraints.HORIZONTAL;
+			gbc_textFieldAxisX.gridx = 7;
+			gbc_textFieldAxisX.gridy = 1;
+			contentPanel.add(textFieldAxisX, gbc_textFieldAxisX);
+			textFieldAxisX.setColumns(10);
 		}
 		{
 			JLabel lblNewLabel_1 = new JLabel("Inner radius");
@@ -162,7 +162,7 @@ public class DlgDonut extends JDialog {
 			textFieldInnerR.setColumns(10);
 		}
 		{
-			JLabel lblNewLabel_3 = new JLabel("Modify center Y");
+			JLabel lblNewLabel_3 = new JLabel("Modify axis Y");
 			GridBagConstraints gbc_lblNewLabel_3 = new GridBagConstraints();
 			gbc_lblNewLabel_3.insets = new Insets(0, 0, 0, 5);
 			gbc_lblNewLabel_3.anchor = GridBagConstraints.EAST;
@@ -171,15 +171,15 @@ public class DlgDonut extends JDialog {
 			contentPanel.add(lblNewLabel_3, gbc_lblNewLabel_3);
 		}
 		{
-			textFieldCenterY = new JTextField();
-			GridBagConstraints gbc_textFieldCenterY = new GridBagConstraints();
-			gbc_textFieldCenterY.gridwidth = 3;
-			gbc_textFieldCenterY.insets = new Insets(0, 0, 0, 5);
-			gbc_textFieldCenterY.fill = GridBagConstraints.HORIZONTAL;
-			gbc_textFieldCenterY.gridx = 7;
-			gbc_textFieldCenterY.gridy = 3;
-			contentPanel.add(textFieldCenterY, gbc_textFieldCenterY);
-			textFieldCenterY.setColumns(10);
+			textFieldAxisY = new JTextField();
+			GridBagConstraints gbc_textFieldAxisY = new GridBagConstraints();
+			gbc_textFieldAxisY.gridwidth = 3;
+			gbc_textFieldAxisY.insets = new Insets(0, 0, 0, 5);
+			gbc_textFieldAxisY.fill = GridBagConstraints.HORIZONTAL;
+			gbc_textFieldAxisY.gridx = 7;
+			gbc_textFieldAxisY.gridy = 3;
+			contentPanel.add(textFieldAxisY, gbc_textFieldAxisY);
+			textFieldAxisY.setColumns(10);
 		}
 		{
 			JPanel buttonPane = new JPanel();
@@ -200,12 +200,12 @@ public class DlgDonut extends JDialog {
 						}else {
 							JOptionPane.showMessageDialog(null, "Values must be positive!", "ERROR", JOptionPane.ERROR_MESSAGE);
 						}
-							{
+						}else {
 							JOptionPane.showMessageDialog(null, "Fields cant be empty!", "ERROR", JOptionPane.ERROR_MESSAGE);
 						}
 					}
 					}
-				});
+				);
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);

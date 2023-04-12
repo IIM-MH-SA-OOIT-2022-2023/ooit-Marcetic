@@ -21,24 +21,26 @@ public class DlgCircle extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	protected boolean commited;
-	private JTextField textFieldCenterY;
-	private JTextField textFieldCenterX;
+	private JTextField textFieldAxisY;
+	private JTextField textFieldAxisX;
 	private JTextField textFieldRadius;
 
-	public JTextField getTextFieldCenterY() {
-		return textFieldCenterY;
+
+
+	public JTextField getTextFieldAxisY() {
+		return textFieldAxisY;
 	}
 
-	public void setTextFieldCenterY(JTextField textFieldCenterY) {
-		this.textFieldCenterY = textFieldCenterY;
+	public void setTextFieldAxisY(JTextField textFieldAxisY) {
+		this.textFieldAxisY = textFieldAxisY;
 	}
 
-	public JTextField getTextFieldCenterX() {
-		return textFieldCenterX;
+	public JTextField getTextFieldAxisX() {
+		return textFieldAxisX;
 	}
 
-	public void setTextFieldCenterX(JTextField textFieldCenterX) {
-		this.textFieldCenterX = textFieldCenterX;
+	public void setTextFieldAxisX(JTextField textFieldAxisX) {
+		this.textFieldAxisX = textFieldAxisX;
 	}
 
 	/**
@@ -70,7 +72,7 @@ public class DlgCircle extends JDialog {
 		gbl_contentPanel.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
 		contentPanel.setLayout(gbl_contentPanel);
 		{
-			JLabel lblModify1 = new JLabel("Modify center X to");
+			JLabel lblModify1 = new JLabel("Modify X axis to");
 			GridBagConstraints gbc_lblModify1 = new GridBagConstraints();
 			gbc_lblModify1.anchor = GridBagConstraints.EAST;
 			gbc_lblModify1.insets = new Insets(0, 0, 5, 5);
@@ -79,17 +81,17 @@ public class DlgCircle extends JDialog {
 			contentPanel.add(lblModify1, gbc_lblModify1);
 		}
 		{
-			textFieldCenterX = new JTextField();
-			GridBagConstraints gbc_textFieldCenterX = new GridBagConstraints();
-			gbc_textFieldCenterX.insets = new Insets(0, 0, 5, 0);
-			gbc_textFieldCenterX.fill = GridBagConstraints.HORIZONTAL;
-			gbc_textFieldCenterX.gridx = 5;
-			gbc_textFieldCenterX.gridy = 0;
-			contentPanel.add(textFieldCenterX, gbc_textFieldCenterX);
-			textFieldCenterX.setColumns(10);
+			textFieldAxisX = new JTextField();
+			GridBagConstraints gbc_textFieldAxisX = new GridBagConstraints();
+			gbc_textFieldAxisX.insets = new Insets(0, 0, 5, 0);
+			gbc_textFieldAxisX.fill = GridBagConstraints.HORIZONTAL;
+			gbc_textFieldAxisX.gridx = 5;
+			gbc_textFieldAxisX.gridy = 0;
+			contentPanel.add(textFieldAxisX, gbc_textFieldAxisX);
+			textFieldAxisX.setColumns(10);
 		}
 		{
-			JLabel lblNewLabel = new JLabel("Modify center Y to");
+			JLabel lblNewLabel = new JLabel("Modify Y axis to");
 			GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
 			gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
 			gbc_lblNewLabel.anchor = GridBagConstraints.EAST;
@@ -98,14 +100,14 @@ public class DlgCircle extends JDialog {
 			contentPanel.add(lblNewLabel, gbc_lblNewLabel);
 		}
 		{
-			textFieldCenterY = new JTextField();
-			GridBagConstraints gbc_textFieldCenterY = new GridBagConstraints();
-			gbc_textFieldCenterY.insets = new Insets(0, 0, 5, 0);
-			gbc_textFieldCenterY.fill = GridBagConstraints.HORIZONTAL;
-			gbc_textFieldCenterY.gridx = 5;
-			gbc_textFieldCenterY.gridy = 1;
-			contentPanel.add(textFieldCenterY, gbc_textFieldCenterY);
-			textFieldCenterY.setColumns(10);
+			textFieldAxisY = new JTextField();
+			GridBagConstraints gbc_textFieldAxisY = new GridBagConstraints();
+			gbc_textFieldAxisY.insets = new Insets(0, 0, 5, 0);
+			gbc_textFieldAxisY.fill = GridBagConstraints.HORIZONTAL;
+			gbc_textFieldAxisY.gridx = 5;
+			gbc_textFieldAxisY.gridy = 1;
+			contentPanel.add(textFieldAxisY, gbc_textFieldAxisY);
+			textFieldAxisY.setColumns(10);
 		}
 		{
 			JLabel lblRadius = new JLabel("Radius:");

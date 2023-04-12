@@ -22,8 +22,8 @@ public class DlgRectangle extends JDialog {
 	private final JPanel contentPanel = new JPanel();
 	protected boolean commited;
 	private static final long serialVersionUID = 1L;
-	private JTextField textFieldUpperLeftX;
-	private JTextField textFieldUpperLeftY;
+	private JTextField textFieldAxisX;
+	private JTextField textFieldAxisY;
 	private JTextField heightField;
 	private JTextField widthField;
 	
@@ -40,21 +40,31 @@ public class DlgRectangle extends JDialog {
 		}
 	}
 
-	public JTextField getTextFieldUpperLeftX() {
-		return textFieldUpperLeftX;
+	
+
+	public JTextField getTextFieldAxisX() {
+		return textFieldAxisX;
 	}
 
-	public void setTextFieldUpperLeftX(JTextField textFieldUpperLeftX) {
-		this.textFieldUpperLeftX = textFieldUpperLeftX;
+
+
+	public void setTextFieldAxisX(JTextField textFieldAxisX) {
+		this.textFieldAxisX = textFieldAxisX;
 	}
 
-	public JTextField getTextFieldUpperLeftY() {
-		return textFieldUpperLeftY;
+
+
+	public JTextField getTextFieldAxisY() {
+		return textFieldAxisY;
 	}
 
-	public void setTextFieldUpperLeftY(JTextField textFieldUpperLeftY) {
-		this.textFieldUpperLeftY = textFieldUpperLeftY;
+
+
+	public void setTextFieldAxisY(JTextField textFieldAxisY) {
+		this.textFieldAxisY = textFieldAxisY;
 	}
+
+
 
 	public boolean isCommited() {
 		return commited;
@@ -143,7 +153,7 @@ public class DlgRectangle extends JDialog {
 			widthField.setColumns(10);
 		}
 		{
-			JLabel lblNewLabel_1 = new JLabel("Upper left X");
+			JLabel lblNewLabel_1 = new JLabel("Modify X axis");
 			GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
 			gbc_lblNewLabel_1.insets = new Insets(0, 0, 5, 5);
 			gbc_lblNewLabel_1.anchor = GridBagConstraints.EAST;
@@ -152,17 +162,17 @@ public class DlgRectangle extends JDialog {
 			contentPanel.add(lblNewLabel_1, gbc_lblNewLabel_1);
 		}
 		{
-			textFieldUpperLeftX = new JTextField();
-			GridBagConstraints gbc_textFieldUpperLeftX = new GridBagConstraints();
-			gbc_textFieldUpperLeftX.insets = new Insets(0, 0, 5, 5);
-			gbc_textFieldUpperLeftX.fill = GridBagConstraints.HORIZONTAL;
-			gbc_textFieldUpperLeftX.gridx = 2;
-			gbc_textFieldUpperLeftX.gridy = 2;
-			contentPanel.add(textFieldUpperLeftX, gbc_textFieldUpperLeftX);
-			textFieldUpperLeftX.setColumns(10);
+			textFieldAxisX = new JTextField();
+			GridBagConstraints gbc_textFieldAxisX = new GridBagConstraints();
+			gbc_textFieldAxisX.insets = new Insets(0, 0, 5, 5);
+			gbc_textFieldAxisX.fill = GridBagConstraints.HORIZONTAL;
+			gbc_textFieldAxisX.gridx = 2;
+			gbc_textFieldAxisX.gridy = 2;
+			contentPanel.add(textFieldAxisX, gbc_textFieldAxisX);
+			textFieldAxisX.setColumns(10);
 		}
 		{
-			JLabel lblNewLabel = new JLabel("Upper Left Y");
+			JLabel lblNewLabel = new JLabel("Modify Y axis");
 			GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
 			gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
 			gbc_lblNewLabel.anchor = GridBagConstraints.EAST;
@@ -171,14 +181,14 @@ public class DlgRectangle extends JDialog {
 			contentPanel.add(lblNewLabel, gbc_lblNewLabel);
 		}
 		{
-			textFieldUpperLeftY = new JTextField();
-			GridBagConstraints gbc_textFieldUpperLeftY = new GridBagConstraints();
-			gbc_textFieldUpperLeftY.insets = new Insets(0, 0, 5, 0);
-			gbc_textFieldUpperLeftY.fill = GridBagConstraints.HORIZONTAL;
-			gbc_textFieldUpperLeftY.gridx = 6;
-			gbc_textFieldUpperLeftY.gridy = 2;
-			contentPanel.add(textFieldUpperLeftY, gbc_textFieldUpperLeftY);
-			textFieldUpperLeftY.setColumns(10);
+			textFieldAxisY = new JTextField();
+			GridBagConstraints gbc_textFieldAxisY = new GridBagConstraints();
+			gbc_textFieldAxisY.insets = new Insets(0, 0, 5, 0);
+			gbc_textFieldAxisY.fill = GridBagConstraints.HORIZONTAL;
+			gbc_textFieldAxisY.gridx = 6;
+			gbc_textFieldAxisY.gridy = 2;
+			contentPanel.add(textFieldAxisY, gbc_textFieldAxisY);
+			textFieldAxisY.setColumns(10);
 		}
 		{
 			JPanel buttonPane = new JPanel();

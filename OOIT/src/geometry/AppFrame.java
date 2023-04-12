@@ -7,18 +7,6 @@ import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
-import geometry.Shape;
-import geometry.Circle;
-import geometry.Donut;
-import geometry.Line;
-import geometry.Point;
-import geometry.Rectangle;
-import java.awt.GridLayout;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -26,10 +14,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
-import javax.swing.JButton;
 import javax.swing.JColorChooser;
 import javax.swing.ButtonGroup;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -216,8 +202,8 @@ public class AppFrame extends JFrame{
 					repaint();
 				}
 				else if(btnLine.isSelected()) {
-					
-					if(brojac==0) {
+					brojac++;
+					if(brojac==1) {
 						startPoint = new Point(e.getX(),e.getY());
 						panel.getShapes().add(startPoint);
 						startPoint.setC(color);
@@ -229,7 +215,8 @@ public class AppFrame extends JFrame{
 						panel.getShapes().remove(startPoint);
 						l.setC(color);
 						repaint();
-						brojac = 0;
+						brojac=0;
+						
 					}
 				
 				}
@@ -297,6 +284,9 @@ public class AppFrame extends JFrame{
 					}
 				}
 				else if(btnColor.isSelected()) {
+					if(slctd.isEmpty()) {
+						JOptionPane.showMessageDialog(null, "You must select an object first!", "ERROR", JOptionPane.ERROR_MESSAGE);
+					}else {
 					color = JColorChooser.showDialog(null, "Choose color",Color.BLACK);
 					btnColor.setBackground(color);
 					for(Shape s : slctd) {
@@ -323,6 +313,7 @@ public class AppFrame extends JFrame{
 								repaint();
 							}		
 						}
+					}
 					}
 				}
 				else if(btnModify.isSelected()) {
@@ -381,8 +372,8 @@ public class AppFrame extends JFrame{
 									dlgRectangle = new DlgRectangle();
 									dlgRectangle.getHeightField().setText(Integer.toString(temp.getHeight()));
 									dlgRectangle.getWidthField().setText(Integer.toString(temp.getWidth()));
-									dlgRectangle.getTextFieldUpperLeftX().setText(Integer.toString(temp.getUpperLeft().getX()));
-									dlgRectangle.getTextFieldUpperLeftY().setText(Integer.toString(temp.getUpperLeft().getY()));
+									dlgRectangle.getTextFieldAxisX().setText(Integer.toString(temp.getUpperLeft().getX()));
+									dlgRectangle.getTextFieldAxisY().setText(Integer.toString(temp.getUpperLeft().getY()));
 									dlgRectangle.setVisible(true);
 									
 									if(dlgRectangle.isCommited()) {
@@ -390,7 +381,7 @@ public class AppFrame extends JFrame{
 										r.setSelected(false);
 										r.setHeight(Integer.parseInt(dlgRectangle.getHeightField().getText()));
 										r.setWidth(Integer.parseInt(dlgRectangle.getWidthField().getText()));
-										r.setUpperLeft(new Point(Integer.parseInt(dlgRectangle.getTextFieldUpperLeftX().getText()), Integer.parseInt(dlgRectangle.getTextFieldUpperLeftY().getText())));
+										r.setUpperLeft(new Point(Integer.parseInt(dlgRectangle.getTextFieldAxisX().getText()), Integer.parseInt(dlgRectangle.getTextFieldAxisY().getText())));
 										panel.getShapes().set(panel.getShapes().indexOf(temp), r);
 										repaint();
 										slctd.clear();
@@ -405,8 +396,8 @@ public class AppFrame extends JFrame{
 											dlgDonut = new DlgDonut();
 											dlgDonut.getTextFieldInnerR().setText(Integer.toString(temp.getInnerR()));
 											dlgDonut.getTextFieldRadius().setText(Integer.toString(temp.getR()));
-											dlgDonut.getTextFieldCenterX().setText(Integer.toString(temp.getCenter().getX()));
-											dlgDonut.getTextFieldCenterY().setText(Integer.toString(temp.getCenter().getY()));
+											dlgDonut.getTextFieldAxisX().setText(Integer.toString(temp.getCenter().getX()));
+											dlgDonut.getTextFieldAxisY().setText(Integer.toString(temp.getCenter().getY()));
 											dlgDonut.setVisible(true);
 											
 											if(dlgDonut.isCommited()) {
@@ -414,7 +405,7 @@ public class AppFrame extends JFrame{
 												d.setSelected(false);
 												d.setInnerR(Integer.parseInt(dlgDonut.getTextFieldInnerR().getText()));
 												d.setR(Integer.parseInt(dlgDonut.getTextFieldRadius().getText()));
-												d.setCenter(new Point(Integer.parseInt(dlgDonut.getTextFieldCenterX().getText()), Integer.parseInt(dlgDonut.getTextFieldCenterY().getText())));
+												d.setCenter(new Point(Integer.parseInt(dlgDonut.getTextFieldAxisX().getText()), Integer.parseInt(dlgDonut.getTextFieldAxisY().getText())));
 												panel.getShapes().set(panel.getShapes().indexOf(temp), d);
 												repaint();
 												slctd.clear();
@@ -425,15 +416,15 @@ public class AppFrame extends JFrame{
 											
 											dlgCircle = new DlgCircle();
 											dlgCircle.getTextFieldRadius().setText(Integer.toString(temp.getR()));
-											dlgCircle.getTextFieldCenterX().setText(Integer.toString(temp.getCenter().getX()));
-											dlgCircle.getTextFieldCenterY().setText(Integer.toString(temp.getCenter().getY()));
+											dlgCircle.getTextFieldAxisX().setText(Integer.toString(temp.getCenter().getX()));
+											dlgCircle.getTextFieldAxisY().setText(Integer.toString(temp.getCenter().getY()));
 											dlgCircle.setVisible(true);
 											
 											if(dlgCircle.isCommited()) {
 												c.setC(temp.getC());
 												c.setSelected(false);
 												c.setR(Integer.parseInt(dlgCircle.getTextFieldRadius().getText()));
-												c.setCenter(new Point(Integer.parseInt(dlgCircle.getTextFieldCenterX().getText()), Integer.parseInt(dlgCircle.getTextFieldCenterY().getText())));
+												c.setCenter(new Point(Integer.parseInt(dlgCircle.getTextFieldAxisX().getText()), Integer.parseInt(dlgCircle.getTextFieldAxisY().getText())));
 												panel.getShapes().set(panel.getShapes().indexOf(temp), c);
 												repaint();
 												slctd.clear();
