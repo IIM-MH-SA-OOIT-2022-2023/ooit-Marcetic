@@ -14,6 +14,14 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
 import javax.swing.JColorChooser;
 import javax.swing.ButtonGroup;
 import javax.swing.JOptionPane;
@@ -49,8 +57,33 @@ public class AppFrame extends JFrame{
 	private DlgLine dlgLine;
 	private DlgCircle dlgCircle;
 	private DlgDonut dlgDonut;
+	private HashMap<String,Integer> a=new HashMap<String,Integer>();
+	
 	
 	private final ButtonGroup buttonGroup = new ButtonGroup();
+	
+	
+	public static HashMap<String, Integer> sizeSort(HashMap<String, Integer> hm)
+	{
+        List<Map.Entry<String, Integer> > list =
+               new LinkedList<Map.Entry<String, Integer> >(hm.entrySet());
+ 
+       
+        Collections.sort(list, new Comparator<Map.Entry<String, Integer> >() {
+            public int compare(Map.Entry<String, Integer> o1,
+                               Map.Entry<String, Integer> o2)
+            {
+                return (o1.getValue()).compareTo(o2.getValue());
+            }
+        });
+         
+        
+        HashMap<String, Integer> temp = new LinkedHashMap<String, Integer>();
+        for (Map.Entry<String, Integer> aa : list) {
+            temp.put(aa.getKey(), aa.getValue());
+        }
+        return temp;
+    }
 	
 
 	/**
@@ -79,6 +112,24 @@ public class AppFrame extends JFrame{
 		 
 		 
 		 btnDelete = new JToggleButton("Delete");
+		 btnDelete.addActionListener(new ActionListener() {
+		 	public void actionPerformed(ActionEvent e) {
+				 if(btnDelete.isSelected()) {
+					if(panel.getShapes().isEmpty()) {
+						JOptionPane.showMessageDialog(null, "Panel is empty.", "ERROR", JOptionPane.ERROR_MESSAGE);
+					}else if(!panel.getShapes().isEmpty() && slctd.isEmpty()) {
+						JOptionPane.showMessageDialog(null, "There is no selected object.", "ERROR", JOptionPane.ERROR_MESSAGE);
+					}else{
+						if(JOptionPane.showConfirmDialog(null, "Do you really want to delete the selected object?", "ERASE",
+								JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
+								panel.getShapes().removeAll(slctd);
+								slctd.clear();
+								repaint();	
+						}
+					}
+				}
+		 	}
+		 });
 		 buttons.add(btnDelete);
 		 buttonGroup.add(btnDelete);
 			
@@ -153,11 +204,11 @@ public class AppFrame extends JFrame{
 		btnModify = new JToggleButton("Modify");
 		btnModify.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				 if(btnModify.isSelected()) {
+				
 					if(panel.getShapes().isEmpty() || slctd.isEmpty()) {
 						JOptionPane.showMessageDialog(null, "Please select object to modify!", "ERROR", JOptionPane.ERROR_MESSAGE);
 					}else if(slctd.size() > 1) {
-						JOptionPane.showMessageDialog(null, "You can modify only one selected object!", "ERROR", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, "You can modify only one object!", "ERROR", JOptionPane.ERROR_MESSAGE);
 					}else if(slctd.size() == 1) {
 						for(Shape s : panel.getShapes()) {
 							if(s instanceof Point) {
@@ -277,7 +328,7 @@ public class AppFrame extends JFrame{
 								}
 							}
 						}
-					}
+					
 
 			}
 			}
@@ -348,20 +399,6 @@ public class AppFrame extends JFrame{
 							}
 						}
 				}
-				}
-				else if(btnDelete.isSelected()) {
-					if(panel.getShapes().isEmpty()) {
-						JOptionPane.showMessageDialog(null, "Panel is empty.", "ERROR", JOptionPane.ERROR_MESSAGE);
-					}else if(!panel.getShapes().isEmpty() && slctd.isEmpty()) {
-						JOptionPane.showMessageDialog(null, "There is no selected object.", "ERROR", JOptionPane.ERROR_MESSAGE);
-					}else{
-						if(JOptionPane.showConfirmDialog(null, "Do you really want to delete the selected object?", "ERASE",
-								JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
-								panel.getShapes().removeAll(slctd);
-								slctd.clear();
-								repaint();	
-						}
-					}
 				}
 				else if(btnPoint.isSelected()) {
 					Point p = new Point(e.getX(),e.getY(),selected);
@@ -472,90 +509,3 @@ public static void main(String[] args) {
 }
 
 
-/*
-  btnSelect.addMouseListener(new MouseAdapter() {
-		  	@Override
-		  	public void mouseClicked(MouseEvent e) {
-		  		for(Shape s : panel.getShapes()){
-		  			if(s.contains(e.getX(),e.getY()))
-		  			{
-		  				if(s instanceof Point){
-		  					if(!s.isSelected()) {
-		  						s.setSelected(true);
-		  						slctd.add(s);
-		  						repaint();
-		  					}else {
-		  						s.setSelected(false);
-		  						slctd.remove(s);
-		  						repaint();
-		  					}
-		  				}else if(s instanceof Line) {
-		  					if(!s.isSelected()) {
-		  						s.setSelected(true);
-		  						slctd.add(s);
-		  						repaint();
-		  					}else {
-		  						s.setSelected(false);
-		  						slctd.remove(s);
-		  						repaint();
-		  					}
-		  				}else if(s instanceof Rectangle) {
-		  					if(!s.isSelected()) {
-		  						s.setSelected(true);
-		  						slctd.add(s);
-		  						repaint();
-		  					}else {
-		  						s.setSelected(false);
-		  						slctd.remove(s);
-		  						repaint();
-		  					}
-		  				}else if(s instanceof Circle) {
-		  					if(s.getClass() != Circle.class) {
-		  						if(!s.isSelected()) {
-		  							s.setSelected(true);
-		  							slctd.add(s);
-		  							repaint();
-		  						}else {
-		  							s.setSelected(false);
-		  							slctd.remove(s);
-		  							repaint();
-		  						}
-		  					}else {
-		  						if(!s.isSelected()) {
-		  							s.setSelected(true);
-		  							slctd.add(s);
-		  							repaint();
-		  						}else {
-		  							s.setSelected(false);
-		  							slctd.remove(s);
-		  							repaint();
-		  						}
-		  					}
-		  				}
-		  			}
-		  		}
-		  	}
-
-		  });
-		  
-		  
-		  
-		  			brojac++;
-				switch(brojac) {
-					case 1:
-						startPoint = new Point(e.getX(),e.getY());
-						panel.getShapes().add(startPoint);
-						startPoint.setC(color);
-						repaint();
-						break;
-					case 2:
-						endPoint = new Point(e.getX(),e.getY());
-						Line l = new Line(startPoint,endPoint,selected);
-						panel.getShapes().add(l);
-						panel.getShapes().remove(startPoint);
-						l.setC(color);
-						repaint();
-						brojac = 0;
-						break;
-				}
-		  */

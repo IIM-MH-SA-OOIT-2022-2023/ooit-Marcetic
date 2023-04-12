@@ -26,6 +26,9 @@ public class DlgRectangle extends JDialog {
 	private JTextField textFieldAxisY;
 	private JTextField heightField;
 	private JTextField widthField;
+	private JLabel lblRectangle;
+	private JButton okButton;
+	
 	
 	/**
 	 * Launch the application.
@@ -40,7 +43,26 @@ public class DlgRectangle extends JDialog {
 		}
 	}
 
+	public JLabel getLblRectangle() {
+		return lblRectangle;
+	}
+
+
+
+	public void setLblRectangle(JLabel lblRectangle) {
+		this.lblRectangle = lblRectangle;
+	}
 	
+	
+	
+
+	public JButton getOkButton() {
+		return okButton;
+	}
+
+	public void setOkButton(JButton okButton) {
+		this.okButton = okButton;
+	}
 
 	public JTextField getTextFieldAxisX() {
 		return textFieldAxisX;
