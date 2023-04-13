@@ -197,14 +197,14 @@ public class DlgDonut extends JDialog {
 								setCommited(true);
 								dispose();
 							}else {
-								JOptionPane.showMessageDialog(null, "Inner radius cannot be bigger than outter radius!", "ERROR", JOptionPane.ERROR_MESSAGE);
+								JOptionPane.showMessageDialog(null, "Unutrasnji radius mora biti manji od spoljasnjeg!", "ERROR", JOptionPane.ERROR_MESSAGE);
 							}
 						}else {
-							JOptionPane.showMessageDialog(null, "Values must be positive!", "ERROR", JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(null, "Sve vrednosti moraju biti pozitivne!", "ERROR", JOptionPane.ERROR_MESSAGE);
 						}
-						}else {
-							JOptionPane.showMessageDialog(null, "Fields cant be empty!", "ERROR", JOptionPane.ERROR_MESSAGE);
-						}
+					}else {
+						JOptionPane.showMessageDialog(null, "Morate uneti sve vrednosti!", "ERROR", JOptionPane.ERROR_MESSAGE);
+					}
 					}
 					}
 				);

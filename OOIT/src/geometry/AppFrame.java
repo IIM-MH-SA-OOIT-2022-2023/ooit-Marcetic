@@ -116,11 +116,11 @@ public class AppFrame extends JFrame{
 		 	public void actionPerformed(ActionEvent e) {
 				 if(btnDelete.isSelected()) {
 					if(panel.getShapes().isEmpty()) {
-						JOptionPane.showMessageDialog(null, "Panel is empty.", "ERROR", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, "Panel je prazan.", "ERROR", JOptionPane.ERROR_MESSAGE);
 					}else if(!panel.getShapes().isEmpty() && slctd.isEmpty()) {
-						JOptionPane.showMessageDialog(null, "There is no selected object.", "ERROR", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, "Niste selektovali objekat.", "ERROR", JOptionPane.ERROR_MESSAGE);
 					}else{
-						if(JOptionPane.showConfirmDialog(null, "Do you really want to delete the selected object?", "ERASE",
+						if(JOptionPane.showConfirmDialog(null, "Da li zelite da obrisete objekat?", "Brisanje",
 								JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
 								panel.getShapes().removeAll(slctd);
 								slctd.clear();
@@ -164,7 +164,7 @@ public class AppFrame extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				if(btnColor.isSelected()) {
 					 {
-					color = JColorChooser.showDialog(null, "Choose color",Color.BLACK);
+					color = JColorChooser.showDialog(null, "Izaberite boju",Color.BLACK);
 					btnColor.setBackground(color);
 					if(slctd.size()==1) {
 						for(Shape s : panel.getShapes()) {
@@ -206,9 +206,9 @@ public class AppFrame extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				
 					if(panel.getShapes().isEmpty() || slctd.isEmpty()) {
-						JOptionPane.showMessageDialog(null, "Please select object to modify!", "ERROR", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, "Selektujte objekat koji zelite da menjate!", "ERROR", JOptionPane.ERROR_MESSAGE);
 					}else if(slctd.size() > 1) {
-						JOptionPane.showMessageDialog(null, "You can modify only one object!", "ERROR", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, "Ne mozete menjati vise od jednog objekta!", "ERROR", JOptionPane.ERROR_MESSAGE);
 					}else if(slctd.size() == 1) {
 						for(Shape s : panel.getShapes()) {
 							if(s instanceof Point) {

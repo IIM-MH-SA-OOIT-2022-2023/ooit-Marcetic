@@ -227,10 +227,10 @@ public class DlgRectangle extends JDialog {
 								setCommited(true);
 								dispose();
 							}else {
-								JOptionPane.showMessageDialog(null, "All values have to be positive!", "ERROR", JOptionPane.ERROR_MESSAGE);
+								JOptionPane.showMessageDialog(null, "Vrednosti moraju biti pozitivne!", "ERROR", JOptionPane.ERROR_MESSAGE);
 							}
 						}else {
-							JOptionPane.showMessageDialog(null, "You have to enter all values!", "ERROR", JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(null, "Morate unete sve vrednosti!", "ERROR", JOptionPane.ERROR_MESSAGE);
 						}
 					}
 				});

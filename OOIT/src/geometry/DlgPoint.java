@@ -102,10 +102,10 @@ public class DlgPoint extends JDialog {
 								setCommited(true);
 								dispose();
 							}else {
-								JOptionPane.showMessageDialog(null, "All values have to be positive!", "ERROR", JOptionPane.ERROR_MESSAGE);
+								JOptionPane.showMessageDialog(null, "Sve vrednosti moraju biti pozitivne!", "ERROR", JOptionPane.ERROR_MESSAGE);
 							}
 						}else {
-							JOptionPane.showMessageDialog(null, "You have to enter all values!", "ERROR", JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(null, "Morate uneti sve vrednosti!", "ERROR", JOptionPane.ERROR_MESSAGE);
 						}
 					}
 				});
