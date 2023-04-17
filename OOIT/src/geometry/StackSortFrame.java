@@ -9,12 +9,14 @@ import javax.swing.ButtonGroup;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.JToggleButton;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
-import geometry.Rectangle;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -24,9 +26,8 @@ import java.util.Stack;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.border.LineBorder;
+import javax.swing.text.JTextComponent;
 
-
-import geometry.Point;
 import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
@@ -36,15 +37,9 @@ public class StackSortFrame extends JFrame implements ActionListener{
 
 	
 	private static final long serialVersionUID = 1L;
-	private int i = 0;
 	private JPanel contentPane;
 	private JPanel buttonPanel;
 	private JPanel panel;
-	private String rectangle;
-	private Stack<Rectangle> stack = new Stack<Rectangle>();
-	private DefaultListModel<String> listModel = new DefaultListModel<String>();
-	private HashMap<String, Rectangle> object = new HashMap<String, Rectangle>();
-	private HashMap<String, Integer> srt = new HashMap<String, Integer>();
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private DlgRectangle dlgR;
 	private JToggleButton add;
@@ -52,6 +47,9 @@ public class StackSortFrame extends JFrame implements ActionListener{
 	private JToggleButton sort;
 	private JList<String> list;
 	private JLabel recStack;
+	private Stack<Rectangle> stack = new Stack<Rectangle>();
+	private Rectangle rctngl;
+	private JTextArea textArea_2;
 	
 	
 	public StackSortFrame() {
@@ -93,25 +91,19 @@ public class StackSortFrame extends JFrame implements ActionListener{
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		panel.add(list);
 		
+		
 		recStack = new JLabel("Rectangle Stack");
 		recStack.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		recStack.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(recStack, BorderLayout.NORTH);
 		
+		textArea_2 = new JTextArea();
+		panel.add(textArea_2, BorderLayout.SOUTH);
+		
+		
 	}
 	
-	protected static HashMap<String, Integer> sortByValue(HashMap<String, Integer> hm) {
-	       List <Map.Entry<String, Integer>> list = new LinkedList <Map.Entry<String, Integer>>(hm.entrySet());
-	        
-	        Collections.sort(list, (i1,i2) -> i1.getValue().compareTo(i2.getValue()));
-	        
-	        HashMap<String, Integer> temp = new LinkedHashMap<String, Integer>();
-	        
-	        for (Map.Entry<String, Integer> aa : list) {
-	            temp.put(aa.getKey(), aa.getValue());
-	        }
-	        return temp;
-	    }
+
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -124,62 +116,58 @@ public class StackSortFrame extends JFrame implements ActionListener{
 		}
 	}
 	protected void add() {
-		dlgR = new DlgRectangle();
-		dlgR.setTitle("New Rectangle");
-		dlgR.setVisible(true);
-		
-		if(dlgR.isCommited()) {
-			i++;
-			Rectangle r = new Rectangle(new Point(Integer.parseInt(dlgR.getTextFieldAxisX().getText()),Integer.parseInt(dlgR.getTextFieldAxisY().getText())),
-			Integer.parseInt(dlgR.getWidthField().getText()),Integer.parseInt(dlgR.getHeightField().getText()));
-			stack.push(r);
-			rectangle = i+". Rectangle area: " +r.area();
-			int area = r.area();
-			srt.put(rectangle, area);
-			object.put(rectangle, r);
-			listModel.add(0, rectangle);
-			list.setModel(listModel);
-		
-		}
-	}
-	protected void remove() {
-		if(list.isSelectionEmpty()) {
-			JOptionPane.showMessageDialog(null, "Please select rectangle to remove!", "ERROR", JOptionPane.ERROR_MESSAGE);
-		}else {
-			if(object.containsKey(list.getSelectedValue())) {		
-				dlgR = new DlgRectangle();
-				dlgR.setTitle("Remove Rectangle");
-				dlgR.getLblRectangle().setText("Remove Rectangle");
-				dlgR.getOkButton().setText("Remove");
-				Rectangle r = object.get(list.getSelectedValue());
-				dlgR.getHeightField().setText(Integer.toString(r.getHeight()));
-				dlgR.getWidthField().setText(Integer.toString(r.getWidth()));
-				dlgR.getTextFieldAxisX().setText(Integer.toString(r.getUpperLeft().getX()));
-				dlgR.getTextFieldAxisY().setText(Integer.toString(r.getUpperLeft().getY()));
-				dlgR.setVisible(true);
+		DlgRectangle dlgRect = new DlgRectangle();
+		dlgRect.setVisible(true);
+		int width = Integer.parseInt(dlgRect.getWidthField().getText());
+		int height = Integer.parseInt(dlgRect.getHeightField().getText());
+		int x = Integer.parseInt(dlgRect.getTextFieldAxisX().getText());
+		int y = Integer.parseInt(dlgRect.getTextFieldAxisY().getText());
+		Point upperLeft = new Point(x, y);
+		rctngl = new Rectangle(upperLeft, width, height);
 				
-				if(dlgR.isCommited()) {
-					stack.remove(object.get(list.getSelectedValue()));
-					object.remove(list.getSelectedValue());
-					srt.remove(list.getSelectedValue());
-					listModel.remove(list.getSelectedIndex());
-					list.setModel(listModel);
-					//System.out.println(stack);
-				}
-			}		
+		if(dlgRect.isCommited()) {
+			stack.push(rctngl);
+			//System.out.println(stack);
+			String stackString = stack.toString();
+            JTextComponent textArea_2 = null;
+			textArea_2.setText(stackString);
+			
 		}
+		
 	}
-	protected void sort() {
-		if(list.getModel().getSize() == 0) {
-			JOptionPane.showMessageDialog(null, "List is empty!", "ERROR", JOptionPane.ERROR_MESSAGE);
-		}else {
-			listModel.removeAllElements();
-			list.setModel(listModel);
-			HashMap<String,Integer> sorted = sortByValue(srt);
-			for (Map.Entry<String, Integer> en : sorted.entrySet()) {
-				listModel.add(0,en.getKey());
+
+
+	
+	protected void remove() {
+		if(stack.isEmpty()) {
+			JOptionPane.showMessageDialog(null, "The stack is empty!", "ERROR", JOptionPane.ERROR_MESSAGE);
+		} else {
+			Rectangle prom = stack.pop();
+			//System.out.println(stack);
+			String stackString = stack.toString();
+            JTextComponent textArea_2 = null;
+			textArea_2.setText(stackString);
 			}
-				list.setModel(listModel);
+		}
+	protected void sort() {
+		if (!stack.isEmpty()) {
+	        Rectangle[] rectArray = stack.toArray(new Rectangle[stack.size()]);
+	        Arrays.sort(rectArray, new Comparator<Rectangle>() {
+	            public int compare(Rectangle rect1, Rectangle rect2) {
+	                int area1 = rect1.getWidth() * rect1.getHeight();
+	                int area2 = rect2.getWidth() * rect2.getHeight();
+	                return area1 - area2;
+	            }
+	        });
+	        stack.clear();
+	        for (Rectangle rect : rectArray) {
+	            stack.push(rect);
+	        }
+	        String stackString = stack.toString();
+	        JTextComponent textArea_2 = null;
+			textArea_2.setText(stackString);
+		} else {
+			JOptionPane.showMessageDialog(null, "The stack is empty!", "ERROR", JOptionPane.ERROR_MESSAGE);
 		}
 	}	
 
